@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDom from "react-dom";
+import { Reset } from "styled-reset";
 import Header from "./component/common/Header";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -45,10 +46,11 @@ const reducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-let store = createStore(reducer);
+const store = createStore(reducer);
 
 ReactDom.render(
   <>
+    <Reset />
     <Provider store={store}>
       <Router>
         <Header />

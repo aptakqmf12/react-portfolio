@@ -1,8 +1,8 @@
 import React from "react";
-import Home from "./component/Home";
-import About from "./component/About";
-import User from "./component/User";
-import UserSub from "./component/UserSub";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import User from "./pages/User";
+import UserSub from "./pages/UserSub";
 import { Route, Routes } from "react-router-dom";
 
 const App = () => {
