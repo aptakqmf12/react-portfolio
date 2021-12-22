@@ -11,7 +11,7 @@ module.exports = {
   },
   // 입력
   entry: {
-    app: [path.resolve(__dirname, "./index.js")],
+    app: [path.resolve(__dirname, "./src/index.js")],
   },
   // 룰 -> loaders라고함
   module: {
@@ -53,7 +53,7 @@ module.exports = {
   devServer: {
     //핫로더 서버
     devMiddleware: { publicPath: "/dist" },
-    static: { directory: path.resolve(__dirname) },
+    static: { directory: path.resolve(__dirname, "./index.js") },
     hot: true,
     historyApiFallback: true,
   },

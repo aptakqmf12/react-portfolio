@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDom from "react-dom";
 import { Reset } from "styled-reset";
-import Header from "./component/common/Header";
+
+import Header from "./components/common/Header";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";

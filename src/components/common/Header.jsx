@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+// import Logo from "/public/logo.png";
 
 const Navigation = styled.ul`
   display: flex;
@@ -20,7 +21,7 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <header>
-      <h1>logo</h1>
+      <h1>{/* <img src={Logo} /> */}</h1>
       <nav>
         <Navigation>
           <li>
