@@ -4,6 +4,9 @@
 - webpack
 - babel
 - react
+- redux
+- react-router(v6)
+- styled-components
 
-### use
-"npm run dev"
+### start
+"npm run dev" (dev-server)
