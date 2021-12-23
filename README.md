@@ -1,10 +1,8 @@
 ## React BoilerPlate
 
 ### skill
-- webpack
-- babel
-- react
-- redux
+- webpack/babel
+- react/redux
 - react-router(v6)
 - styled-components
 
