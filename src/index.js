@@ -1,61 +1,26 @@
 import React from "react";
 import ReactDom from "react-dom";
 import { Reset } from "styled-reset";
+import { worker } from "./mocks/browser";
 
 import Header from "./components/common/Header";
+import Footer from "./components/common/Footer";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { store } from "./store";
 
-const INITIAL_STATE = {
-  name: "ktw",
-  weight: 100,
-  info: {
-    flag: false,
-    hobby: ["swimming", "dance", "singing"],
-  },
-};
-
-const reducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case "ADD_WEIGHT":
-      return {
-        ...state,
-        weight: state.weight + 1,
-      };
-    case "CHANGE_NAME":
-      if (state.name === "ktw") {
-        return {
-          ...state,
-          name: "ldk",
-        };
-      } else {
-        return {
-          ...state,
-          name: "ktw",
-        };
-      }
-    case "TOGGLE_HOBBY":
-      return {
-        ...state,
-        info: { flag: !state.flag },
-      };
-
-    default:
-      return state;
-  }
-};
-
-const store = createStore(reducer);
+// if (process.env.NODE_ENV === "development") {
+//   worker.start();
+// }
 
 ReactDom.render(
   <>
-    <Reset />
     <Provider store={store}>
       <Router>
         <Header />
         <App />
+        <Footer />
       </Router>
     </Provider>
   </>,

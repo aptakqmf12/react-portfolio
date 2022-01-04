@@ -27,6 +27,9 @@ module.exports = {
                 targets: {
                   browsers: ["> 0.1% in KR", "last 2 chrome versions"], //browserlist 사이트 참고
                 },
+                // useBuiltIns: "usage",
+                // corejs: 3,
+                // modules: false,
                 debug: true,
               },
             ],
@@ -35,8 +38,22 @@ module.exports = {
           plugins: [
             "@babel/plugin-proposal-class-properties",
             "react-refresh/babel",
+            "@babel/plugin-transform-runtime",
           ],
+          sourceType: "unambiguous",
         },
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: "file-loader",
+          },
+        ],
       },
     ],
   },
@@ -52,8 +69,8 @@ module.exports = {
   },
   devServer: {
     //핫로더 서버
-    devMiddleware: { publicPath: "/dist" },
-    static: { directory: path.resolve(__dirname, "./index.js") },
+    // devMiddleware: { publicPath: "/dist" },
+    // static: { directory: path.resolve(__dirname, "./index.js") },
     hot: true,
     historyApiFallback: true,
   },

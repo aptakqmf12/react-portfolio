@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "Jua";
+  src: url("../font/Jua-Regular.ttf");
+}
+html {
+  font-size: 10px;
+}
+body {
+  font-family: "Jua";
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
+.wrap {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 0 10px;
+}

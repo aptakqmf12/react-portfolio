@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
+
+import Production from "../components/Production";
+import Loading from "../components/common/Loading";
 
 const Home = () => {
+  const [loading, setLoading] = useState(true);
+  const timer = setTimeout(() => {
+    setLoading(false);
+  }, 500);
   return (
     <>
-      <div>Home Home Home Home Home</div>
+      {loading && <Loading />}
+      <Production />
     </>
   );
 };

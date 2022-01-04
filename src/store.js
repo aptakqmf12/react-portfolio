@@ -1,50 +1,49 @@
-const redux = require("redux");
-const createStore = redux.createStore;
-const reduxLogger = require("redux-logger");
-const applyMiddleware = redux.applyMiddleware;
-const logger = reduxLogger.createLogger();
-const combineReducers = redux.combineReducers;
+import { createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-// action
-
-//reducer
-const weightState = {
-  weight: 101,
+const INITIAL_STATE = {
+  name: "ktw",
+  weight: 77,
+  info: {
+    flag: false,
+    hobby: ["swimming", "dance", "singing"],
+  },
+  isAuthorized: localStorage.getItem("isAuthorized"),
 };
 
-const weightReducer = (state = weightState, action) => {
+// 이펙트 빌딩?
+// export const ADD_WEIGHT = "ADD_WEIGHT";
+
+// const addWeight = (init)=>(
+//   {type:ADD_WEIGHT}
+//   );
+
+export const ADD_WEIGHT = "ADD_WEIGHT";
+export const AUTH_TRUE = "AUTH_TRUE";
+export const AUTH_FALSE = "AUTH_FALSE";
+
+const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "CLICK":
+    case ADD_WEIGHT:
       return {
         ...state,
         weight: state.weight + 1,
       };
-    default:
-      return state;
-  }
-};
 
-const viewState = {
-  views: 9,
-};
-
-const viewReducer = (state = viewState, action) => {
-  switch (action.type) {
-    case "CLICK":
+    case "AUTH_TRUE":
       return {
         ...state,
-        weight: state.views + 1,
+        isAuthorized: true,
       };
+    case "AUTH_FALSE":
+      return {
+        ...state,
+        isAuthorized: false,
+      };
+
     default:
       return state;
   }
 };
 
-const rootReducer = combineReducers({
-  view: viewReducer,
-  weight: weightReducer,
-});
-
-let store = createStore(rootReducer);
-
-console.log(store.getState());
+export const store = createStore(reducer, composeWithDevTools());
