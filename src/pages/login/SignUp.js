@@ -2,6 +2,13 @@ import React, { useState, useMemo, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+import { auth } from "../../firebase";
+
 const SignUp = () => {
   const item = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -22,9 +29,14 @@ const SignUp = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("name", signupName);
-    localStorage.setItem("id", signupId);
-    localStorage.setItem("password", signupPw);
+
+    createUserWithEmailAndPassword(auth, signupId, signupPw).then(
+      (userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+      }
+    );
+
     alert("회원가입이 완료되었습니다.");
     setSignupName("");
     setSignupId("");

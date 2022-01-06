@@ -1,8 +1,0 @@
-{
-  "posts": {
-    "id": 1,
-    "title": "title",
-    "price": 10000,
-    "wished": true
-  }
-}

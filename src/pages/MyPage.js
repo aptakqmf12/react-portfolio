@@ -84,7 +84,7 @@ const MyPage = () => {
           <div className="profile">
             <img src={ProfileImg} alt="profile_thumb" />
             <input type="file" /> {/* 추후에 구현 */}
-            <div>{item.name}</div>
+            <div>닉네임자리</div>
           </div>
           <div className="btn">
             <button>클릭</button>
@@ -117,13 +117,7 @@ const MyPage = () => {
 
         <Right_Section>
           <h2>찜한 상품</h2>
-          <Production />
-
-          <h2>찜한 상품</h2>
-          <Production />
-
-          <h2>찜한 상품</h2>
-          <Production />
+          <Production onlyWishedPrd={true} />
         </Right_Section>
       </Wrap>
     </>

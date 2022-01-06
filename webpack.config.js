@@ -63,9 +63,9 @@ module.exports = {
   ],
   //출력
   output: {
-    path: path.join(__dirname, "dist"),
+    path: path.join(__dirname, "public/dist/"),
     filename: "app.js",
-    publicPath: "/dist",
+    publicPath: "/dist/",
   },
   devServer: {
     //핫로더 서버

@@ -8,8 +8,14 @@ import Login from "./pages/login/Login";
 import SignUp from "./pages/login/SignUp";
 
 import { Route, Routes, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const App = () => {
+  const item = useSelector((state) => state);
+
+  const RequireAuth = ({ children, redirectTo }) => {
+    return item.isAuth ? <MyPage /> : <Login />;
+  };
   return (
     <div className="wrap">
       <Routes>
@@ -27,11 +33,6 @@ const App = () => {
       </Routes>
     </div>
   );
-};
-
-const RequireAuth = ({ children, redirectTo }) => {
-  let isAuth = localStorage.getItem("isAuthorized");
-  return isAuth === "true" ? <MyPage /> : <Login />;
 };
 
 export default App;

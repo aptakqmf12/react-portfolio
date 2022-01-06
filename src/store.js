@@ -8,7 +8,8 @@ const INITIAL_STATE = {
     flag: false,
     hobby: ["swimming", "dance", "singing"],
   },
-  isAuthorized: localStorage.getItem("isAuthorized"),
+
+  isAuth: null,
 };
 
 // 이펙트 빌딩?
@@ -29,16 +30,15 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         weight: state.weight + 1,
       };
-
-    case "AUTH_TRUE":
+    case AUTH_TRUE:
       return {
         ...state,
-        isAuthorized: true,
+        isAuth: true,
       };
-    case "AUTH_FALSE":
+    case AUTH_FALSE:
       return {
         ...state,
-        isAuthorized: false,
+        isAuth: false,
       };
 
     default:

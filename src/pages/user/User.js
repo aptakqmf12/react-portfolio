@@ -8,26 +8,24 @@ const User = () => {
   const dispatch = useDispatch();
 
   const [prd, setPrd] = useState("");
+  const [load, setLoad] = useState(true);
 
   const fetchData = async () => {
     const res = await axios.get(
       "https://c6770e07-602a-4155-be11-6198182b35c4.mock.pstmn.io/production"
     );
     setPrd(res.data);
-    console.log(res.data);
+    console.log(res.data[1].title);
+    setLoad(false);
   };
 
-  const onDeleteList = (e) => {
-    console.log(e.target.dataset.id);
-    axios.post(
+  const postData = async () => {
+    const res = await axios.post(
       "https://c6770e07-602a-4155-be11-6198182b35c4.mock.pstmn.io/postPrd",
-      {
-        id: 999,
-        title: "post",
-        price: 9999,
-        wished: true,
-      }
+      {}
     );
+
+    console.log(res);
   };
 
   useEffect(() => {
@@ -36,20 +34,23 @@ const User = () => {
   return (
     <>
       <h2>User List</h2>
+
       <div>
+        {load && <div style={{ color: "blue" }}>Loading...</div>}
         {prd &&
           prd.map((e, i) => {
             return (
               <>
-                <div key={i}>
-                  {e.title}
-                  <button data-id={i} onClick={onDeleteList}>
-                    delete
-                  </button>
-                </div>
+                <div key={i}>{e.title}</div>
               </>
             );
           })}
+      </div>
+
+      <div>
+        <button style={{ backgroundColor: "red" }} onClick={postData}>
+          post
+        </button>
       </div>
     </>
   );

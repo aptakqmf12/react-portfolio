@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "/public/images/logo.jpg";
 import { useSelector, useDispatch } from "react-redux";
+
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 import { AUTH_FALSE } from "../../store";
 
-const Block = styled.div``;
 const StyledHeader = styled.header`
   margin-bottom: 25px;
   border-bottom: 1px #999 solid;
@@ -45,6 +47,12 @@ const Header = () => {
   const item = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const onLogout = async () => {
+    //await signOut(auth); 로그인정보를 사용할때
+    dispatch({ type: AUTH_FALSE });
+    alert("로그아웃 되었습니다");
+  };
+
   return (
     <StyledHeader>
       <div className="wrap">
@@ -66,7 +74,7 @@ const Header = () => {
         </nav>
 
         <div>
-          {!item.isAuthorized ? (
+          {!item.isAuth ? (
             <Navigation>
               <li>
                 <Link to="login">login</Link>
@@ -78,14 +86,7 @@ const Header = () => {
           ) : (
             <Navigation>
               <li>
-                <Link
-                  to=""
-                  onClick={() => {
-                    dispatch({ type: AUTH_FALSE });
-                    localStorage.setItem("isAuthorized", false);
-                    alert("로그아웃됐습니다");
-                  }}
-                >
+                <Link to="" onClick={onLogout}>
                   logOut
                 </Link>
               </li>
@@ -96,6 +97,7 @@ const Header = () => {
           )}
         </div>
       </div>
+      {item.data}
     </StyledHeader>
   );
 };
