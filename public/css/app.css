@@ -2,17 +2,38 @@
   font-family: "Jua";
   src: url("../font/Jua-Regular.ttf");
 }
+
+@font-face {
+  font-family: "GmarketSansLight";
+  src: url("../font/GmarketSansTTFLight.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("../font/GmarketSansTTFMedium.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "GmarketSansBold";
+  src: url("../font/GmarketSansTTFBold.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 html {
   font-size: 10px;
+  height: 100%;
 }
 body {
-  font-family: "Jua";
+  font-family: "GmarketSansMedium";
   font-size: 1.6rem;
   line-height: 1.2;
 }
 
 .wrap {
-  width: 1200px;
+  width: 1000px;
   margin: 0 auto;
   padding: 0 10px;
 }

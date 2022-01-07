@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Production from "../components/Production";
+import ProductionContainer from "../components/production/Production";
 
 import ProfileImg from "/public/images/ktw.jpg";
 
@@ -117,7 +117,7 @@ const MyPage = () => {
 
         <Right_Section>
           <h2>찜한 상품</h2>
-          <Production onlyWishedPrd={true} />
+          <ProductionContainer onlyWishedPrd={true} />
         </Right_Section>
       </Wrap>
     </>

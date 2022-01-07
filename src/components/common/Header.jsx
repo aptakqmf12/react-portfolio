@@ -50,6 +50,7 @@ const Header = () => {
   const onLogout = async () => {
     //await signOut(auth); 로그인정보를 사용할때
     dispatch({ type: AUTH_FALSE });
+    localStorage.removeItem("loginedUserId");
     alert("로그아웃 되었습니다");
   };
 

@@ -26,8 +26,11 @@ const Login = () => {
     signInWithEmailAndPassword(auth, id, pw)
       .then((userCredential) => {
         // 아래 정보는 로그인한 유저의 정보가 필요할때 사용
-        // const user = userCredential.user;
-        // onAuthStateChanged(auth, (user) => {});
+        const user = userCredential.user;
+        onAuthStateChanged(auth, (user) => {
+          user && console.log(user.uid);
+          localStorage.setItem("loginedUserId", user.uid);
+        });
         dispatch({ type: AUTH_TRUE });
         alert("로그인 되었습니다");
         navigate("/");

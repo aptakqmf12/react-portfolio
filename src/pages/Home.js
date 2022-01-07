@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Production from "../components/Production";
+import Production from "../components/production/Production";
 import Loading from "../components/common/Loading";
 
 const Home = () => {

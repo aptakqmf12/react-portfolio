@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-
+import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import {
   doc,
   collection,
@@ -53,6 +53,7 @@ const Production = ({ onlyWishedPrd }) => {
   const [production, setProduction] = useState([]);
   const item = useSelector((state) => state);
   const dispatch = useDispatch();
+  let navigate = useNavigate();
 
   const getFireStoreData = async () => {
     const querySnapshot = await getDocs(collection(db, "production"));
@@ -69,15 +70,20 @@ const Production = ({ onlyWishedPrd }) => {
     const docRef = doc(db, "production", targetId);
     const docSnap = await getDoc(docRef);
 
-    await updateDoc(doc(db, "production", targetId), {
-      //targetId의 문서의 현재 wished값을 토글
-      wished: !docSnap.data().wished,
-    });
-    docSnap.data().wished === true
-      ? alert("찜하기 취소")
-      : alert("찜하셨습니다");
+    if (item.isAuth) {
+      await updateDoc(doc(db, "production", targetId), {
+        //targetId의 문서의 현재 wished값을 토글
+        wished: !docSnap.data().wished,
+      });
+      docSnap.data().wished === true
+        ? alert("찜하기 취소")
+        : alert("찜하셨습니다");
+    } else {
+      alert("로그인하세요");
+      navigate("/login");
+    }
 
-    getFireStoreData();
+    getFireStoreData(); //데이터 받아와서 현행화
   };
 
   useEffect(() => {
@@ -108,7 +114,9 @@ const Production = ({ onlyWishedPrd }) => {
                         style={{ width: "100%" }}
                       />
                       <div className="title">
-                        <b>{e.data().prd_name}</b>
+                        <Link to={`/productionDetail/${e.id}`}>
+                          <b>{e.data().prd_name}</b>
+                        </Link>
                       </div>
                       <div className="price">{e.data().prd_price}원</div>
                       <button
@@ -144,7 +152,9 @@ const Production = ({ onlyWishedPrd }) => {
                         />
 
                         <div className="title">
-                          <b>{e.data().prd_name}</b>
+                          <Link to={`/productionDetail/${e.id}`}>
+                            <b>{e.data().prd_name}</b>
+                          </Link>
                         </div>
 
                         <div className="price">{e.data().prd_price}원</div>
