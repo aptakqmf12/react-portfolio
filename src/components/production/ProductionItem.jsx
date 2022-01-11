@@ -36,23 +36,44 @@ const Item = styled.div`
   }
 `;
 
-const ProductionItem = ({ product, onClickWish }) => {
+const ProductionItem = ({ product, wished_prd_ld, onClickWish }) => {
   const item = useSelector((state) => state);
   const dispatch = useDispatch();
-
   return (
-    <Item key={product.prd_id}>
-      <img src={`${product.prd_url}`} style={{ width: "100%" }} />
-      <div className="title">
-        <Link to={`/productionDetail/${product.prd_id}`}>
-          <b>{product.prd_name}</b>
-        </Link>
-      </div>
-      <div className="price">{product.prd_price}원</div>
-      <button data-id={product.prd_id} onClick={onClickWish}>
-        ❤
-      </button>
-    </Item>
+    <>
+      {/* ['jvfC6gRXOBS3cJWaXcLd', 'S6WxJrSpQ1kSQmJqsE1h', '7i5qzZXrhqdXB9eVoJPs'] */}
+      {console.log(wished_prd_ld)}
+      <Item key={product.prd_id}>
+        <img src={`${product.prd_url}`} style={{ width: "100%" }} />
+        <div className="title">
+          <Link to={`/productionDetail/${product.prd_id}`}>
+            <b>{product.prd_name}</b>
+          </Link>
+        </div>
+        <div className="price">{product.prd_price}원</div>
+        <div>{product.prd_id}</div>
+
+        {item.isAuth ? (
+          wished_prd_ld?.includes(product.prd_id) ? (
+            <button
+              data-id={product.prd_id}
+              onClick={onClickWish}
+              style={{ color: "red" }}
+            >
+              ❤
+            </button>
+          ) : (
+            <button data-id={product.prd_id} onClick={onClickWish}>
+              ❤
+            </button>
+          )
+        ) : (
+          <button data-id={product.prd_id} onClick={onClickWish}>
+            ❤
+          </button>
+        )}
+      </Item>
+    </>
   );
 };
 

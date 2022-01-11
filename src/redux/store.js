@@ -31,7 +31,6 @@ const reducer = (state = INITIAL_STATE, action) => {
       return { ...state, userData: action.payload };
     case fetchActionTypes.FETCH_PRODUCTS:
       return { ...state, productData: action.payload };
-
     default:
       return state;
   }

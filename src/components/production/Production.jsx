@@ -9,17 +9,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { db } from "../../firebase";
-import {
-  doc,
-  collection,
-  setDoc, //상품을 추가할일있을때 사용
-  getDoc,
-  getDocs,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { getUser } from "../../redux/actions/userActions";
 import { getProducts } from "../../redux/actions/productActions";
 import ProductionItem from "./ProductionItem";
+import ProductionSkeleton from "./ProductionSkeleton";
 
 const Item = styled.div`
   position: relative;
@@ -51,12 +45,8 @@ const Item = styled.div`
     }
   }
 `;
-const wishedPrds = [];
 
 const Production = ({ onlyWishedPrd }) => {
-  // const [production, setProduction] = useProduct();
-  const [production, setProduction] = useState();
-
   const item = useSelector((state) => state);
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -64,27 +54,28 @@ const Production = ({ onlyWishedPrd }) => {
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getUser(localStorage.getItem("loginedUserId")));
-  }, []);
+  }, [item.userData.wished_prd_id]);
 
   const onClickWish = async (e) => {
     const targetPrdId = e.target.dataset.id; //상품필드의 ID
-    wishedPrds.push(targetPrdId);
-    //중첩 id 삭제
-    const unduplicatedPrds = wishedPrds.filter((e, i) => {
-      return wishedPrds.indexOf(e) === i;
-    });
-    // if (item.userData.wished_prd_id.includes(targetPrdId)) {
-    //   //클릭한 id값이 데이터중에 없으면 추가
-    //   console.log("기존에 있음 삭제 ㄱ");
-    // } else {
-    //   //클릭한 id값이 데이터중에 있으면 추가하지말고 삭제
-    //   console.log("추가가능함");
-    // }
-    updateDoc(doc(db, "user", localStorage.getItem("loginedUserId")), {
-      wished_prd_id: unduplicatedPrds,
-    });
-    e.target.style.color = "red";
-    alert("찜완료");
+    if (item.isAuth) {
+      if (item.userData.wished_prd_id.includes(targetPrdId)) {
+        //클릭한 id값이 데이터중에 있으면 추가하지말고 삭제
+        updateDoc(doc(db, "user", localStorage.getItem("loginedUserId")), {
+          wished_prd_id: arrayRemove(targetPrdId),
+        });
+        alert("찜삭제");
+      } else {
+        //클릭한 id값이 데이터중에 없으면 추가
+        updateDoc(doc(db, "user", localStorage.getItem("loginedUserId")), {
+          wished_prd_id: arrayUnion(targetPrdId),
+        });
+        alert("찜완료");
+      }
+    } else {
+      alert("로그인 먼저 해주세요");
+      navigate("/login");
+    }
   };
 
   return (
@@ -100,7 +91,11 @@ const Production = ({ onlyWishedPrd }) => {
                 style={{ border: "1px #666 solid", overflow: "hidden" }}
                 key={e.prd_id}
               >
-                <ProductionItem product={e} onClickWish={onClickWish} />
+                <ProductionItem
+                  product={e}
+                  wished_prd_ld={item.userData.wished_prd_id}
+                  onClickWish={onClickWish}
+                />
               </SwiperSlide>
             );
           })
@@ -112,7 +107,7 @@ const Production = ({ onlyWishedPrd }) => {
                   style={{ border: "1px #666 solid", overflow: "hidden" }}
                   key={e.prd_id}
                 >
-                  <ProductionItem onClickWish={onClickWish} />
+                  <ProductionItem product={e} onClickWish={onClickWish} />
                 </SwiperSlide>
               );
             })}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import MyPage from "./pages/MyPage";
@@ -14,9 +14,9 @@ import { useSelector } from "react-redux";
 const App = () => {
   const item = useSelector((state) => state);
 
-  const RequireAuth = ({ children, redirectTo }) => {
+  const RequireAuth = useCallback(({ children, redirectTo }) => {
     return item.isAuth ? <MyPage /> : <Login />;
-  };
+  }, []);
   return (
     <div className="wrap">
       <Routes>
@@ -38,7 +38,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         {/* 마이페이지 */}
         <Route
-          path="MyPage"
+          path="mypage"
           element={<RequireAuth redirectTo="login"></RequireAuth>}
         />
       </Routes>

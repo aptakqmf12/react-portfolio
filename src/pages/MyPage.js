@@ -92,6 +92,7 @@ const MyPage = () => {
           <div className="profile">
             <img src={ProfileImg} alt="profile_thumb" />
             <input type="file" /> {/* 추후에 구현 */}
+            <div>{item.userData.name}님</div>
           </div>
           <div className="btn">
             <button>클릭</button>
