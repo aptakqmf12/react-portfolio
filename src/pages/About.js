@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
 import { getUser, getWholeUser } from "../redux/actions/userActions";
 
 const About = () => {
@@ -9,18 +8,14 @@ const About = () => {
 
   useEffect(() => {
     dispatch(getWholeUser());
+    return () => {};
   }, []);
 
   return (
     <>
-      <h2 style={{ marginBottom: "2rem" }}>UserDatas</h2>
+      <h2 style={{ marginBottom: "2rem" }}>about me</h2>
 
-      <div>
-        {item.userData?.map((e) => {
-          return <div>{e.name}</div>;
-        })}{" "}
-        입니다
-      </div>
+      <div>{item.weight}kg</div>
     </>
   );
 };

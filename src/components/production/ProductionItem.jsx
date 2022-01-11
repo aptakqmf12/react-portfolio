@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+
+import ProductionSkeleton from "./ProductionSkeleton";
 
 const Item = styled.div`
   position: relative;
@@ -33,24 +36,20 @@ const Item = styled.div`
   }
 `;
 
-const ProductionItem = ({
-  prd_name,
-  prd_price,
-  prd_url,
-  prd_id,
-  onClickWish,
-  user,
-}) => {
+const ProductionItem = ({ product, onClickWish }) => {
+  const item = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   return (
-    <Item key={prd_id}>
-      <img src={`${prd_url}`} style={{ width: "100%" }} />
+    <Item key={product.prd_id}>
+      <img src={`${product.prd_url}`} style={{ width: "100%" }} />
       <div className="title">
-        <Link to={`/productionDetail/${prd_id}`}>
-          <b>{prd_name}</b>
+        <Link to={`/productionDetail/${product.prd_id}`}>
+          <b>{product.prd_name}</b>
         </Link>
       </div>
-      <div className="price">{prd_price}원</div>
-      <button data-id={prd_id} onClick={onClickWish}>
+      <div className="price">{product.prd_price}원</div>
+      <button data-id={product.prd_id} onClick={onClickWish}>
         ❤
       </button>
     </Item>

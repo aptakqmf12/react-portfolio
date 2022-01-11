@@ -1,6 +1,5 @@
-export const ActionTypes = {
+export const fetchActionTypes = {
   FETCH_USER: "FETCH_USER",
   FETCH_WHOLE_USER: "FETCH_WHOLE_USER",
-
   FETCH_PRODUCTS: "FETCH_PRODUCTS",
 };

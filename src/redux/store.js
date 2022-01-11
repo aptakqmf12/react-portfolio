@@ -1,13 +1,14 @@
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { ActionTypes } from "./actionTypes/fetchActionTypes";
+import { fetchActionTypes } from "./actionTypes/fetchActionTypes";
 import { AUTH_TRUE, AUTH_FALSE } from "./actions/authActions";
 import thunk from "redux-thunk";
 
 const INITIAL_STATE = {
   weight: 77,
   isAuth: localStorage.getItem("loginedUserId") ? true : false,
-  userData: [],
+  allUserData: [],
+  userData: {},
   productData: [],
 };
 
@@ -24,8 +25,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isAuth: false,
       };
-    case ActionTypes.FETCH_WHOLE_USER:
+    case fetchActionTypes.FETCH_WHOLE_USER:
+      return { ...state, allUserData: action.payload };
+    case fetchActionTypes.FETCH_USER:
       return { ...state, userData: action.payload };
+    case fetchActionTypes.FETCH_PRODUCTS:
+      return { ...state, productData: action.payload };
 
     default:
       return state;

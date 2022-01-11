@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Production from "../components/production/Production";
-import { getFireStoreData } from "../data";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase";
+
+import { getUser, getWholeUser } from "../redux/actions/userActions";
+import { getProducts } from "../redux/actions/productActions";
 
 import ProfileImg from "/public/images/ktw.jpg";
 
@@ -76,21 +76,13 @@ const Right_Section = styled.div`
   }
 `;
 
-const getUser = async () => {
-  const singleData = await getDoc(
-    doc(db, "user", localStorage.getItem("loginedUserId"))
-  );
-  return singleData; //promise반환
-};
-
 const MyPage = () => {
   const item = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const [currentUser, setCurrentUser] = useState(null);
-
   useEffect(() => {
-    getUser().then(setCurrentUser); // 비동기받을때 해당패턴으로
+    dispatch(getUser(localStorage.getItem("loginedUserId")));
+    return () => {};
   }, []);
 
   return (
@@ -100,7 +92,6 @@ const MyPage = () => {
           <div className="profile">
             <img src={ProfileImg} alt="profile_thumb" />
             <input type="file" /> {/* 추후에 구현 */}
-            <div>{currentUser?.data().name} 님</div>
           </div>
           <div className="btn">
             <button>클릭</button>

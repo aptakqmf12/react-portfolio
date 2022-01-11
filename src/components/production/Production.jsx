@@ -17,11 +17,9 @@ import {
   getDocs,
   updateDoc,
 } from "firebase/firestore";
-import { getFireStoreDataAll, getFireStoreData } from "../../data";
+import { getUser } from "../../redux/actions/userActions";
+import { getProducts } from "../../redux/actions/productActions";
 import ProductionItem from "./ProductionItem";
-
-import useProduct from "../../hooks/useProduct";
-import useUser from "../../hooks/useUser";
 
 const Item = styled.div`
   position: relative;
@@ -56,12 +54,17 @@ const Item = styled.div`
 const wishedPrds = [];
 
 const Production = ({ onlyWishedPrd }) => {
-  const [production, setProduction] = useProduct();
-  const [user, setUser] = useUser();
+  // const [production, setProduction] = useProduct();
+  const [production, setProduction] = useState();
 
   const item = useSelector((state) => state);
   const dispatch = useDispatch();
   let navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getProducts());
+    dispatch(getUser(localStorage.getItem("loginedUserId")));
+  }, []);
 
   const onClickWish = async (e) => {
     const targetPrdId = e.target.dataset.id; //상품필드의 ID
@@ -70,84 +73,52 @@ const Production = ({ onlyWishedPrd }) => {
     const unduplicatedPrds = wishedPrds.filter((e, i) => {
       return wishedPrds.indexOf(e) === i;
     });
+    // if (item.userData.wished_prd_id.includes(targetPrdId)) {
+    //   //클릭한 id값이 데이터중에 없으면 추가
+    //   console.log("기존에 있음 삭제 ㄱ");
+    // } else {
+    //   //클릭한 id값이 데이터중에 있으면 추가하지말고 삭제
+    //   console.log("추가가능함");
+    // }
     updateDoc(doc(db, "user", localStorage.getItem("loginedUserId")), {
       wished_prd_id: unduplicatedPrds,
     });
+    e.target.style.color = "red";
     alert("찜완료");
   };
 
   return (
-    <>
-      <Swiper
-        modules={[Navigation, Pagination]}
-        spaceBetween={20}
-        slidesPerView={4}
-      >
-        {!onlyWishedPrd
-          ? production?.map(({ prd_name, prd_price, prd_url, id }) => {
+    <Swiper
+      modules={[Navigation, Pagination]}
+      spaceBetween={20}
+      slidesPerView={4}
+    >
+      {!onlyWishedPrd
+        ? item.productData?.map((e) => {
+            return (
+              <SwiperSlide
+                style={{ border: "1px #666 solid", overflow: "hidden" }}
+                key={e.prd_id}
+              >
+                <ProductionItem product={e} onClickWish={onClickWish} />
+              </SwiperSlide>
+            );
+          })
+        : item.productData
+            ?.filter((e) => e.wished_prd_id === true)
+            ?.map((e) => {
               return (
                 <SwiperSlide
                   style={{ border: "1px #666 solid", overflow: "hidden" }}
-                  key={id}
+                  key={e.prd_id}
                 >
-                  <ProductionItem
-                    prd_name={prd_name}
-                    prd_price={prd_price}
-                    prd_url={prd_url}
-                    prd_id={id}
-                    onClickWish={onClickWish}
-                    user={user}
-                  />
-
-                  <Item>
-                    <img src={`${prd_url}`} style={{ width: "100%" }} />
-                    <div className="title">
-                      <Link to={`/productionDetail/${id}`}>
-                        <b>{prd_name}</b>
-                      </Link>
-                    </div>
-                    <div className="price">{prd_price}원</div>
-                    <button data-id={id} onClick={onClickWish}>
-                      ❤
-                    </button>
-                  </Item>
+                  <ProductionItem onClickWish={onClickWish} />
                 </SwiperSlide>
               );
-            })
-          : production
-              ?.filter((e) => e.wished === true)
-              ?.map((e, id) => {
-                return (
-                  <SwiperSlide
-                    style={{ border: "1px #666 solid", overflow: "hidden" }}
-                    key={e.id}
-                  >
-                    <Item>
-                      <img src={`${e.prd_url}`} style={{ width: "100%" }} />
+            })}
 
-                      <div className="title">
-                        <Link to={`/productionDetail/${e.id}`}>
-                          <b>{e.prd_name}</b>
-                        </Link>
-                      </div>
-
-                      <div className="price">{e.prd_price}원</div>
-                      <button
-                        data-id={e.id}
-                        data-wished={e.wished}
-                        onClick={onClickWish}
-                        style={e.wished ? { color: "red" } : { color: "black" }}
-                      >
-                        ❤
-                      </button>
-                    </Item>
-                  </SwiperSlide>
-                );
-              })}
-
-        {/* 찜한 상품만 select */}
-      </Swiper>
-    </>
+      {/* 찜한 상품만 select */}
+    </Swiper>
   );
 };
 
