@@ -1,0 +1,6 @@
+export const ActionTypes = {
+  FETCH_USER: "FETCH_USER",
+  FETCH_WHOLE_USER: "FETCH_WHOLE_USER",
+
+  FETCH_PRODUCTS: "FETCH_PRODUCTS",
+};

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import ProductionContainer from "../components/production/Production";
+import Production from "../components/production/Production";
+import { getFireStoreData } from "../data";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 import ProfileImg from "/public/images/ktw.jpg";
 
@@ -73,9 +76,22 @@ const Right_Section = styled.div`
   }
 `;
 
+const getUser = async () => {
+  const singleData = await getDoc(
+    doc(db, "user", localStorage.getItem("loginedUserId"))
+  );
+  return singleData; //promise반환
+};
+
 const MyPage = () => {
   const item = useSelector((state) => state);
   const dispatch = useDispatch();
+
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    getUser().then(setCurrentUser); // 비동기받을때 해당패턴으로
+  }, []);
 
   return (
     <>
@@ -84,7 +100,7 @@ const MyPage = () => {
           <div className="profile">
             <img src={ProfileImg} alt="profile_thumb" />
             <input type="file" /> {/* 추후에 구현 */}
-            <div>닉네임자리</div>
+            <div>{currentUser?.data().name} 님</div>
           </div>
           <div className="btn">
             <button>클릭</button>
@@ -117,7 +133,8 @@ const MyPage = () => {
 
         <Right_Section>
           <h2>찜한 상품</h2>
-          <ProductionContainer onlyWishedPrd={true} />
+
+          <Production onlyWishedPrd />
         </Right_Section>
       </Wrap>
     </>

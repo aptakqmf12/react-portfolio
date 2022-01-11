@@ -4,9 +4,9 @@ import styled from "styled-components";
 import Logo from "/public/images/logo.jpg";
 import { useSelector, useDispatch } from "react-redux";
 
-import { signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { auth } from "../../firebase";
-import { AUTH_FALSE } from "../../store";
+import { AUTH_FALSE } from "../../redux/actions/authActions";
 
 const StyledHeader = styled.header`
   margin-bottom: 25px;
@@ -48,9 +48,9 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const onLogout = async () => {
-    //await signOut(auth); 로그인정보를 사용할때
-    dispatch({ type: AUTH_FALSE });
+    await signOut(auth);
     localStorage.removeItem("loginedUserId");
+    dispatch({ type: AUTH_FALSE });
     alert("로그아웃 되었습니다");
   };
 
@@ -98,7 +98,6 @@ const Header = () => {
           )}
         </div>
       </div>
-      {item.data}
     </StyledHeader>
   );
 };

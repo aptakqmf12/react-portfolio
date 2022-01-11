@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase";
-import { AUTH_TRUE } from "../../store";
+import { AUTH_TRUE } from "../../redux/actions/authActions";
 
 const Login = () => {
   const item = useSelector((state) => state);
@@ -26,14 +26,13 @@ const Login = () => {
     signInWithEmailAndPassword(auth, id, pw)
       .then((userCredential) => {
         // 아래 정보는 로그인한 유저의 정보가 필요할때 사용
-        const user = userCredential.user;
         onAuthStateChanged(auth, (user) => {
-          user && console.log(user.uid);
+          if (!user) return;
           localStorage.setItem("loginedUserId", user.uid);
+          dispatch({ type: AUTH_TRUE });
+          alert("로그인 되었습니다");
+          navigate("/");
         });
-        dispatch({ type: AUTH_TRUE });
-        alert("로그인 되었습니다");
-        navigate("/");
       })
       .catch((err) => {
         alert("아이디 비밀번호가 틀렸습니다.");
@@ -57,7 +56,12 @@ const Login = () => {
               placeholder="아이디"
             />
             <legend>password</legend>
-            <input value={pw} onChange={onChangePw} placeholder="패스워드" />
+            <input
+              type="password"
+              value={pw}
+              onChange={onChangePw}
+              placeholder="패스워드"
+            />
             <button type="submit">로그인</button>
           </fieldset>
         </form>

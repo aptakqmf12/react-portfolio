@@ -39,11 +39,7 @@ const User = () => {
         {load && <div style={{ color: "blue" }}>Loading...</div>}
         {prd &&
           prd.map((e, i) => {
-            return (
-              <>
-                <div key={i}>{e.title}</div>
-              </>
-            );
+            return <div key={e.title}>{e.title}</div>;
           })}
       </div>
 
