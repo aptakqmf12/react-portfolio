@@ -44,11 +44,13 @@
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "style-loader": "^3.3.1",
     "styled-components": "^5.3.3",
     "styled-reset": "^4.3.4",
     "swiper": "^7.3.4",
+    "swr": "^1.1.2",
     "webpack-dev-server": "^4.6.0"
   },
   "msw": {

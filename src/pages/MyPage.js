@@ -78,13 +78,6 @@ const Right_Section = styled.div`
 
 const MyPage = () => {
   const item = useSelector((state) => state);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUser(localStorage.getItem("loginedUserId")));
-    return () => {};
-  }, []);
-
   return (
     <>
       <Wrap>

@@ -10,7 +10,7 @@ const Home = () => {
   }, 500);
   return (
     <>
-      {/* {loading && <Loading />} */}
+      {loading && <Loading />}
       <Production />
     </>
   );

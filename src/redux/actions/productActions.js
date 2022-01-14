@@ -10,3 +10,11 @@ export const getProducts = () => async (dispatch) => {
   });
   dispatch({ type: fetchActionTypes.FETCH_PRODUCTS, payload: mergedData });
 };
+
+// export const addWishedProduct = (targetPrdId) => (dispatch) => {
+//   dispatch({ type: fetchActionTypes.ADD_PRODUCT, payload: "data" });
+// };
+
+// export const removeWishedProduct = (targetPrdId) => (dispatch) => {
+//   dispatch({ type: fetchActionTypes.REMOVE_PRODUCT, payload: "data" });
+// };

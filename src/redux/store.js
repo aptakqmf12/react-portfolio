@@ -1,42 +1,20 @@
 import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { fetchActionTypes } from "./actionTypes/fetchActionTypes";
-import { AUTH_TRUE, AUTH_FALSE } from "./actions/authActions";
 import thunk from "redux-thunk";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { persistStore } from "redux-persist";
+import { rootReducer } from "./reducers/index";
 
-const INITIAL_STATE = {
-  weight: 77,
-  isAuth: localStorage.getItem("loginedUserId") ? true : false,
-  allUserData: [],
-  userData: {},
-  productData: [],
+const persistConfig = {
+  key: "root",
+  storage,
 };
 
-// Reducer
-const reducer = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case AUTH_TRUE:
-      return {
-        ...state,
-        isAuth: true,
-      };
-    case AUTH_FALSE:
-      return {
-        ...state,
-        isAuth: false,
-      };
-    case fetchActionTypes.FETCH_WHOLE_USER:
-      return { ...state, allUserData: action.payload };
-    case fetchActionTypes.FETCH_USER:
-      return { ...state, userData: action.payload };
-    case fetchActionTypes.FETCH_PRODUCTS:
-      return { ...state, productData: action.payload };
-    default:
-      return state;
-  }
-};
+const persisted = persistReducer(persistConfig, rootReducer);
 
 export const store = createStore(
-  reducer,
+  persisted,
   composeWithDevTools(applyMiddleware(thunk))
 );
+export const persistor = persistStore(store);

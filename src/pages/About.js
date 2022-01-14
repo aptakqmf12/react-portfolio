@@ -4,12 +4,6 @@ import { getUser, getWholeUser } from "../redux/actions/userActions";
 
 const About = () => {
   const item = useSelector((state) => state);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getWholeUser());
-    return () => {};
-  }, []);
 
   return (
     <>

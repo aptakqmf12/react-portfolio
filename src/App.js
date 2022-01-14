@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import MyPage from "./pages/MyPage";
@@ -9,14 +9,23 @@ import SignUp from "./pages/login/SignUp";
 import ProductionDetail from "./pages/ProductionDetail";
 
 import { Route, Routes, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getUser } from "./redux/actions/userActions";
+import { getProducts } from "./redux/actions/productActions";
 
 const App = () => {
   const item = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser(localStorage.getItem("loginedUserId")));
+    dispatch(getProducts());
+  }, []);
 
   const RequireAuth = useCallback(({ children, redirectTo }) => {
     return item.isAuth ? <MyPage /> : <Login />;
   }, []);
+
   return (
     <div className="wrap">
       <Routes>

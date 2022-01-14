@@ -36,13 +36,11 @@ const Item = styled.div`
   }
 `;
 
-const ProductionItem = ({ product, wished_prd_ld, onClickWish }) => {
+const ProductionItem = ({ product, wished_prd_id, onClickWish }) => {
   const item = useSelector((state) => state);
   const dispatch = useDispatch();
   return (
     <>
-      {/* ['jvfC6gRXOBS3cJWaXcLd', 'S6WxJrSpQ1kSQmJqsE1h', '7i5qzZXrhqdXB9eVoJPs'] */}
-      {console.log(wished_prd_ld)}
       <Item key={product.prd_id}>
         <img src={`${product.prd_url}`} style={{ width: "100%" }} />
         <div className="title">
@@ -50,11 +48,12 @@ const ProductionItem = ({ product, wished_prd_ld, onClickWish }) => {
             <b>{product.prd_name}</b>
           </Link>
         </div>
-        <div className="price">{product.prd_price}원</div>
-        <div>{product.prd_id}</div>
+        <div className="price">
+          {product.prd_price.toLocaleString("ko-KR")}원
+        </div>
 
         {item.isAuth ? (
-          wished_prd_ld?.includes(product.prd_id) ? (
+          wished_prd_id?.includes(product.prd_id) ? (
             <button
               data-id={product.prd_id}
               onClick={onClickWish}

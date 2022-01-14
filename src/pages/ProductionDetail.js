@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
-import { db } from "../firebase";
-import { doc, collection, getDoc, getDocs } from "firebase/firestore";
+import { useParams } from "react-router-dom";
+import { getProducts } from "../redux/actions/productActions";
 
 const Wrap = styled.div`
   width: 100%;
@@ -89,17 +88,18 @@ const DetaileBody = styled.div`
 `;
 
 const ProductionDetail = () => {
+  const item = useSelector((state) => state);
+  const dispatch = useDispatch();
   const { id } = useParams(); //prdId
   const [prd, setPrd] = useState({});
 
-  const getPrdData = async () => {
-    const docRef = doc(db, "production", id);
-    const docSnap = await getDoc(docRef);
-    setPrd(docSnap.data());
-  };
-
   useEffect(() => {
-    getPrdData();
+    dispatch(getProducts());
+    setPrd(
+      item.productData.filter((prd) => {
+        prd.prd_id === id;
+      })
+    );
   }, []);
 
   return (
@@ -107,11 +107,8 @@ const ProductionDetail = () => {
       <Wrap>
         <DetaileTop>
           <div className="prd__thumb">
-            <div>
-              <img src={prd.prd_url} />
-            </div>
+            <img src={prd.prd_url} />
           </div>
-
           <div className="prd__option">
             {/* 가격존 */}
             <div className="prd__option--name mb">{prd.prd_name}</div>
@@ -132,7 +129,17 @@ const ProductionDetail = () => {
         </DetaileTop>
 
         <DetaileBody>
-          <div className="">421414</div>
+          <nav>
+            <ul>
+              <li>상품정보</li>
+              <li>상품리뷰</li>
+              <li>상품문의</li>
+            </ul>
+          </nav>
+
+          <div className="prd__info">상품정보{item.weight}</div>
+          <div className="prd__comments">상품리뷰</div>
+          <div className="prd__qa">상품문의</div>
         </DetaileBody>
       </Wrap>
     </>

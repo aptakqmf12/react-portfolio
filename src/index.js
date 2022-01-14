@@ -7,18 +7,21 @@ import Footer from "./components/common/Footer";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import { store, persistor } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 ReactDom.render(
   <>
     <Provider store={store}>
-      <Router>
-        <Header />
-        <App />
-        <Footer />
-      </Router>
+      <PersistGate persistor={persistor}>
+        <Router>
+          <Header />
+          <App />
+          <Footer />
+        </Router>
+      </PersistGate>
     </Provider>
   </>,
 
-  document.querySelector("#root")
+  document.getElementById("root")
 );

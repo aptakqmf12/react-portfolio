@@ -25,14 +25,13 @@ const Login = () => {
 
     signInWithEmailAndPassword(auth, id, pw)
       .then((userCredential) => {
-        // 아래 정보는 로그인한 유저의 정보가 필요할때 사용
         onAuthStateChanged(auth, (user) => {
-          if (!user) return;
+          // if (!user) return;
           localStorage.setItem("loginedUserId", user.uid);
-          dispatch({ type: AUTH_TRUE });
-          alert("로그인 되었습니다");
-          navigate("/");
         });
+        dispatch({ type: AUTH_TRUE });
+        alert("로그인 되었습니다");
+        navigate("/");
       })
       .catch((err) => {
         alert("아이디 비밀번호가 틀렸습니다.");
