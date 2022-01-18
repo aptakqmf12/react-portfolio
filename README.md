@@ -1,10 +1,21 @@
-## React BoilerPlate
+# React 포트폴리오
 
-### skill
-- webpack/babel
-- react/redux
+## 기획
+- 로그인/로그아웃
+- 상품 찜하기
+- 상품 리뷰댓글
+- 마이페이지 프로필 변경
+- (예정) 메인 infinite scroll (intersection observer)
+- (예정) 메인 lazy loading 
+
+## 기술스택
+> front-end
+- react(Hooks)
+- redux(redux-thunk, redux-persist)
 - react-router(v6)
-- styled-components
+- webpack/babel
+- styled-components(BEM네이밍)
 
-### start
-"npm run dev" (dev-server)
+> back-end
+- firebase/firestore/storage
+- localStorage
