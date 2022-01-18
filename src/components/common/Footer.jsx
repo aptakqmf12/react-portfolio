@@ -4,20 +4,19 @@ import styled from "styled-components";
 const StyledFooter = styled.footer`
   margin-top: 25px;
   border-top: 1px #999 solid;
-  ${".wrap"} {
+  .wrap {
     display: flex;
     justify-content: space-between;
     padding-top: 10px;
-
-    ${"h2"} {
+    h2 {
       font-size: 2.4rem;
       margin-bottom: 1rem;
     }
-    ${"ul"} {
-      ${"li"} {
-        margin-bottom: 1rem;
-        font-size: 1.4rem;
-        ${"address"} {
+    ul {
+      li {
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        address {
           font-weight: bold;
         }
       }
@@ -33,9 +32,19 @@ const Footer = () => {
           <h2>profile</h2>
           <ul>
             <li>name : ktw</li>
-            <li>phone : 010-8009-5439</li>
-            <li>email : aptakqmf12@gmail.com</li>
-            <li>github : https://github.com/aptakqmf12</li>
+            <li>
+              phone : <a href="tel:010-8009-5439">010-8009-5439</a>
+            </li>
+            <li>
+              email :{" "}
+              <a href="mailto:aptakqmf12@gmail.com">aptakqmf12@gmail.com</a>
+            </li>
+            <li>
+              github :{" "}
+              <a href="https://github.com/aptakqmf12" target="_blank">
+                https://github.com/aptakqmf12
+              </a>
+            </li>
           </ul>
         </div>
         <div>

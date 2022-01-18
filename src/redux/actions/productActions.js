@@ -1,5 +1,11 @@
 import { fetchActionTypes } from "../actionTypes/fetchActionTypes";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 
 export const getProducts = () => async (dispatch) => {
@@ -11,10 +17,15 @@ export const getProducts = () => async (dispatch) => {
   dispatch({ type: fetchActionTypes.FETCH_PRODUCTS, payload: mergedData });
 };
 
-// export const addWishedProduct = (targetPrdId) => (dispatch) => {
-//   dispatch({ type: fetchActionTypes.ADD_PRODUCT, payload: "data" });
-// };
-
 // export const removeWishedProduct = (targetPrdId) => (dispatch) => {
-//   dispatch({ type: fetchActionTypes.REMOVE_PRODUCT, payload: "data" });
+//   //서버에 찜 삭제 정보를 보낸뒤
+//   await updateDoc(
+//     doc(db, "user", localStorage.getItem("loginedUserId")),
+//     {
+//       wished_prd_id: arrayRemove(targetPrdId),
+//     }
+//   );
+
+//   //userData에 변경값 저장
+//   dispatch({ type: fetchActionTypes.REMOVE_WISHED_PRODUCT, payload: "data" });
 // };

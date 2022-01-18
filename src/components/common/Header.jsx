@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { getAuth, signOut } from "firebase/auth";
 import { auth } from "../../firebase";
-import { AUTH_FALSE } from "../../redux/actions/authActions";
+import { AUTH_FALSE, clearCurrentUser } from "../../redux/actions/authActions";
 
 const StyledHeader = styled.header`
   margin-bottom: 25px;
@@ -51,6 +51,7 @@ const Header = () => {
     await signOut(auth);
     localStorage.removeItem("loginedUserId");
     dispatch({ type: AUTH_FALSE });
+    dispatch(clearCurrentUser());
     alert("로그아웃 되었습니다");
   };
 
@@ -75,7 +76,7 @@ const Header = () => {
         </nav>
 
         <div>
-          {!item.isAuth ? (
+          {!item.reducer.isAuth ? (
             <Navigation>
               <li>
                 <Link to="login">login</Link>

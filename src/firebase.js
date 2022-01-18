@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const firebaseConfig = {
   //ktw-portfolio
@@ -13,8 +14,12 @@ const firebaseConfig = {
   measurementId: "G-W30BT4Z884",
 };
 
+// const storage = getStorage();
+// const storageRef = storage.ref();
+
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
+const storage = getStorage(firebaseApp);
 
-export { db, auth };
+export { db, auth, storage };

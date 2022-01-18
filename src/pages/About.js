@@ -9,7 +9,7 @@ const About = () => {
     <>
       <h2 style={{ marginBottom: "2rem" }}>about me</h2>
 
-      <div>{item.weight}kg</div>
+      <div>{item.reducer.weight}kg</div>
     </>
   );
 };

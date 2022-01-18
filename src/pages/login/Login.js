@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase";
-import { AUTH_TRUE } from "../../redux/actions/authActions";
+import { AUTH_TRUE, setCurrentUser } from "../../redux/actions/authActions";
 
 const Login = () => {
   const item = useSelector((state) => state);
@@ -28,6 +28,7 @@ const Login = () => {
         onAuthStateChanged(auth, (user) => {
           // if (!user) return;
           localStorage.setItem("loginedUserId", user.uid);
+          dispatch(setCurrentUser(localStorage.getItem("loginedUserId")));
         });
         dispatch({ type: AUTH_TRUE });
         alert("로그인 되었습니다");

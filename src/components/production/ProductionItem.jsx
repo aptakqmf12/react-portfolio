@@ -7,7 +7,7 @@ import ProductionSkeleton from "./ProductionSkeleton";
 
 const Item = styled.div`
   position: relative;
-
+  padding: 0.5rem;
   img {
     margin-bottom: 1rem;
     transition: 0.2s all ease-out;
@@ -15,12 +15,18 @@ const Item = styled.div`
       transform: scale(1.03);
     }
   }
+  .review {
+    text-align: right;
+    font-size: 1.2rem;
+    color: Red;
+    letter-spacing: 0.1rem;
+  }
   .title {
     margin-bottom: 1rem;
     font-size: 1.8rem;
   }
   .price {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
   button {
     position: absolute;
@@ -43,6 +49,9 @@ const ProductionItem = ({ product, wished_prd_id, onClickWish }) => {
     <>
       <Item key={product.prd_id}>
         <img src={`${product.prd_url}`} style={{ width: "100%" }} />
+        <div className="review">
+          ({product.prd_comments ? product.prd_comments.length : 0})
+        </div>
         <div className="title">
           <Link to={`/productionDetail/${product.prd_id}`}>
             <b>{product.prd_name}</b>
@@ -52,7 +61,7 @@ const ProductionItem = ({ product, wished_prd_id, onClickWish }) => {
           {product.prd_price.toLocaleString("ko-KR")}원
         </div>
 
-        {item.isAuth ? (
+        {item.reducer.isAuth ? (
           wished_prd_id?.includes(product.prd_id) ? (
             <button
               data-id={product.prd_id}

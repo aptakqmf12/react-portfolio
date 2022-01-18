@@ -1,16 +1,17 @@
 import React, { useEffect, useCallback } from "react";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import MyPage from "./pages/MyPage";
+import MyPage from "./pages/mypage/MyPage";
 import User from "./pages/user/User";
 import Ktw from "./pages/user/Ktw";
 import Login from "./pages/login/Login";
 import SignUp from "./pages/login/SignUp";
 import ProductionDetail from "./pages/ProductionDetail";
+import EditMyPage from "./pages/mypage/EditMyPage";
 
 import { Route, Routes, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "./redux/actions/userActions";
+import { setCurrentUser } from "./redux/actions/authActions";
 import { getProducts } from "./redux/actions/productActions";
 
 const App = () => {
@@ -18,12 +19,12 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUser(localStorage.getItem("loginedUserId")));
+    dispatch(setCurrentUser(localStorage.getItem("loginedUserId")));
     dispatch(getProducts());
   }, []);
 
   const RequireAuth = useCallback(({ children, redirectTo }) => {
-    return item.isAuth ? <MyPage /> : <Login />;
+    return item.reducer.isAuth ? <MyPage /> : <Login />;
   }, []);
 
   return (
@@ -50,6 +51,7 @@ const App = () => {
           path="mypage"
           element={<RequireAuth redirectTo="login"></RequireAuth>}
         />
+        <Route path="EditMyPage" element={<EditMyPage />} />
       </Routes>
     </div>
   );

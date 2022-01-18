@@ -17,7 +17,7 @@ const User = () => {
       <h2 style={{ marginBottom: "2rem" }}>현재 회원가입된 회원</h2>
 
       <div>
-        {item.allUserData?.map((e) => {
+        {item.reducer.allUserData?.map((e) => {
           return <div key={e.userId}>{e.name}</div>;
         })}
       </div>
