@@ -19,3 +19,7 @@
 > back-end
 - firebase/firestore/storage
 - localStorage
+
+## URL
+- https://ktw-portfolio.web.app/
+*무료호스팅/무료db라서 트래픽 초과될 수 있음
