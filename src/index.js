@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDom from "react-dom";
-import { Reset } from "styled-reset";
 
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
