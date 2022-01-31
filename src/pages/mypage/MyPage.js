@@ -65,6 +65,7 @@ const Left_Section = styled.div`
   }
 `;
 
+
 const Right_Section = styled.div`
   width: calc(80% - 5rem);
   margin-left: 5rem;
